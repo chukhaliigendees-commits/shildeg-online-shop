@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Амьдрал илүү амархан онлайн дэлгүүр</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f6fa;
+            color: #2f3640;
+        }
+
+        /* Дээд талын цэс */
+        nav {
+            background-color: #2f3542;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            color: #ffffff;
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        /* Ангилал цэснүүд */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 10px;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+
+        .nav-links li {
+            position: relative;
+            height: 100%;
+        }
+
+        .nav-links a, .dropbtn {
+            color: #f1f2f6;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover, .dropbtn:hover, .active-category {
+            background-color: #70a1ff;
+            color: white;
+        }
+
+        /* Доош унадаг дэд цэс */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #2f3542;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 999;
+            border-radius: 5px;
+            top: 100%;
+            margin-top: 0; 
+        }
+
+        .dropdown-content a {
+            color: #f1f2f6;
+            padding: 12px 16px;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #57606f;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Гоёмсог Арын Зурагтай Толгой хэсэг (Banner) */
+        header {
+            background: linear-gradient(rgba(12, 36, 97, 0.7), rgba(12, 36, 97, 0.85)), 
+                        url('https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1600') no-repeat center center/cover;
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.3);
+        }
+
+        header h1 { 
+            margin: 0; 
+            font-size: 2.8rem; 
+            font-weight: bold;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            letter-spacing: 1px;
+        }
+        
+        header p { 
+            margin: 15px 0 30px; 
+            color: #f1f2f6; 
+            font-size: 1.2rem;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        /* Хайлтын хэсэг */
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 25px;
+            font-size: 1.05rem;
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            outline: none;
+            box-sizing: border-box;
+            transition: box-shadow 0.2s;
+        }
+
+        .search-input:focus {
+            box-shadow: 0 5px 25px rgba(112, 161, 255, 0.4);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 30px;
+            flex-direction: row;
+        }
+
+        .products-section {
+            flex: 3;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+            text-align: center;
+            border: 1px solid #f1f2f6;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: contain;
+            border-radius: 12px;
+            background-color: #f1f2f6;
+        }
+
+        .product-title { font-size: 1.2rem; margin: 20px 0 10px; color: #2f3542; min-height: 44px; display: flex; align-items: center; justify-content: center; }
+        .product-price { color: #ff4757; font-weight: bold; font-size: 1.3rem; margin-bottom: 20px; }
+        
+        .btn-add {
+            background-color: #2ed573; color: white; border: none; padding: 14px 15px;
+            border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .btn-add:hover { background-color: #26af5f; }
+
+        /* Сагсны хэсэг */
+        .cart-section {
+            flex: 1.2;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+            min-width: 320px;
+            height: fit-content;
+            border: 1px solid #f1f2f6;
+            position: sticky;
+            top: 90px;
+        }
+
+        .cart-title {
+            border-bottom: 2px solid #f1f2f6; padding-bottom: 15px; margin-top: 0;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .cart-count { background-color: #ff4757; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; }
+        
+        .cart-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin: 15px 0; 
+            padding-bottom: 15px; 
+            border-bottom: 1px dashed #f1f2f6; 
+        }
+        
+        .cart-item-info {
+            flex: 2;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qty-btn {
+            background-color: #f1f2f6;
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qty-btn:hover { background-color: #dfe4ea; }
+
+        .btn-delete { 
+            background: none; 
+            border: none; 
+            color: #ff4757; 
+            cursor: pointer; 
+            font-size: 1.1rem;
+            margin-left: 10px;
+        }
+
+        /* ℹ️ ШИНЭ: Сагсны доорх чухал зааварчилгааны хэсэг */
+        .cart-warning {
+            background-color: #fffaf0;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #d63031;
+            line-height: 1.4;
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .cart-total { font-size: 1.4rem; font-weight: bold; margin-top: 25px; display: flex; justify-content: space-between; }
+        .btn-checkout { background-color: #1e90ff; color: white; border: none; width: 100%; padding: 16px; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 15px; transition: background 0.2s; }
+        .btn-checkout:hover { background-color: #0a7de8; }
+
+        /* Модалуудын үндсэн стиль */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 16px;
+            width: 450px;
+            max-width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        /* Барааны дэлгэрэнгүй харах гоёмсог модал */
+        .detail-modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 20px;
+            width: 800px;
+            max-width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            position: relative;
+            display: flex;
+            gap: 30px;
+        }
+
+        .detail-left {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            height: 380px;
+        }
+
+        .detail-left img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .detail-right {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .detail-right h2 {
+            margin-top: 0;
+            color: #2f3542;
+            font-size: 1.6rem;
+            line-height: 1.4;
+        }
+
+        .detail-right .price {
+            font-size: 1.8rem;
+            color: #ff4757;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .detail-right .desc {
+            font-size: 0.95rem;
+            color: #57606f;
+            line-height: 1.6;
+            white-space: pre-line;
+            border-top: 1px solid #f1f2f6;
+            padding-top: 15px;
+            margin-bottom: 25px;
+            overflow-y: auto;
+            max-height: 200px;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #aaa;
+            z-index: 10;
+        }
+
+        .close-btn:hover { color: #2f3542; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #57606f; }
+        .form-group input, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
+        
+        .bank-info {
+            background-color: #f1f2f6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 5px solid #1e90ff;
+            font-size: 0.95rem;
+        }
+
+        .bank-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 5px 0;
+        }
+
+        .btn-copy {
+            background: #1e90ff;
+            color: white;
+            border: none;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        .btn-copy:hover { background: #0a7de8; }
+
+        .btn-confirm { background-color: #2ed573; color: white; border: none; width: 100%; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; font-size: 1rem; transition: background 0.2s; }
+        .btn-confirm:hover { background-color: #26af5f; }
+
+        /* Хөвдөг холбоо барих хэсэг */
+        .contact-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            border-radius: 30px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .contact-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+        }
+
+        .btn-phone { background-color: #ff4757; }
+        .btn-chat { background-color: #0084FF; }
+
+        /* Responsive - Гар утасны тохиргоо */
+        @media (max-width: 900px) {
+            nav { padding: 15px 20px; flex-direction: column; gap: 10px; }
+            .container { flex-direction: column; }
+            .cart-section { position: static; width: auto; min-width: 0; }
+            .contact-widget { bottom: 20px; right: 20px; }
+            .detail-modal-content { flex-direction: column; height: auto; max-height: 95vh; padding: 20px; }
+            .detail-left { height: 250px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo" onclick="filterCategory('Бүгд')">🛍️ Амьдрал илүү амархан</a>
+        <ul class="nav-links">
+            <li><a href="#" id="cat-all" class="active-category" onclick="filterCategory('Бүгд')">Бүгд</a></li>
+            <li><a href="#" id="cat-home" onclick="filterCategory('Гэр ахуйн бараа')">Гэр ахуйн бараа</a></li>
+            <li><a href="#" id="cat-elec" onclick="filterCategory('Электроник')">Электроник</a></li>
+            <li><a href="#" id="cat-security" onclick="filterCategory('Аюулгүй байдал, Хяналт')">Аюулгүй байдал, Хяналт</a></li>
+            <li><a href="#" id="cat-electric" onclick="filterCategory('Цахилгаан, Холболт')">Цахилгаан, Холболт</a></li>
+            <li><a href="#" id="cat-acc" onclick="filterCategory('Кабель, Дагалдах хэрэгсэл')">Кабель, Дагалдах хэрэгсэл</a></li>
+            <li><a href="#" id="cat-book" onclick="filterCategory('Ном')">Ном</a></li>
+            <li class="dropdown">
+                <button class="dropbtn">Хувцас ▾</button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="filterCategory('Эрэгтэй хувцас')">Эрэгтэй хувцас</a>
+                    <a href="#" onclick="filterCategory('Эмэгтэй хувцас')">Эмэгтэй хувцас</a>
+                    <a href="#" onclick="filterCategory('Хүүхдийн хувцас')">Хүүхдийн хувцас</a>
+                    <a href="#" onclick="filterCategory('Үндэсний хувцас')">Үндэсний хувцас</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Арын Зурагтай болон Хайлтын талбартай Banner -->
+    <header>
+        <h1 id="header-title">Амьдрал илүү амархан</h1>
+        <p>Гэрийн тав тух, эмх цэгцийг бүрдүүлэгч ухаалаг шийдлүүд</p>
+        
+        <div class="search-container">
+            <input type="text" id="search-bar" class="search-input" placeholder="Барааны нэрээр хайх..." oninput="handleSearch()">
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="products-list" class="products-section">
+            <p style="text-align: center; grid-column: 1/-1; color: #7f8c8d;">Барааг ачаалж байна...</p>
+        </div>
+
+        <div class="cart-section">
+            <h3 class="cart-title">Миний сагс <span id="cart-count" class="cart-count">0</span></h3>
+            <div id="cart-items">
+                <p style="color: #7f8c8d; text-align: center; margin: 30px 0;">Сагс хоосон байна</p>
+            </div>
+            
+            <!-- ℹ️ ШИНЭЧЛЭГДСЭН: Сагсны доорх чухал санамж -->
+            <div class="cart-warning">
+                <span>⚠️</span>
+                <span>Та төлбөрөө 100% шилжүүлснээр захиалга баталгаажих бөгөөд бараа 24-48 цагийн дотор таны гарт хүргэгдэх болно.</span>
+            </div>
+
+            <div class="cart-total">
+                <span>Нийт дүн:</span>
+                <span><span id="total-price">0</span> ₮</span>
+            </div>
+            <button class="btn-checkout" onclick="openOrderModal()">Захиалах</button>
+        </div>
+    </div>
+
+    <!-- Барааны дэлгэрэнгүй мэдээлэл харуулах Модал -->
+    <div id="detailModal" class="modal">
+        <div class="detail-modal-content">
+            <span class="close-btn" onclick="closeDetailModal()">&times;</span>
+            
+            <div class="detail-left" id="modal-slider-container"></div>
+
+            <div class="detail-right">
+                <h2 id="modal-product-title">Барааны нэр</h2>
+                <div class="price" id="modal-product-price">0 ₮</div>
+                <div class="desc" id="modal-product-desc">Тайлбар одоогоор байхгүй байна.</div>
+                <button class="btn-add" id="modal-add-btn" style="margin-top: auto;">Сагсанд хийх</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Захиалгын Модал -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeOrderModal()">&times;</span>
+            <h2>Захиалга баталгаажуулах</h2>
+            <p>Доорх мэдээллийг үнэн зөв бөглөнө үү.</p>
+            
+            <div class="form-group">
+                <label>Хүлээн авагчийн нэр:</label>
+                <input type="text" id="cust-name" placeholder="Жишээ: А.Тамир">
+            </div>
+            <div class="form-group">
+                <label>Утасны дугаар:</label>
+                <input type="text" id="cust-phone" placeholder="Жишээ: 99112233">
+            </div>
+            <div class="form-group">
+                <label>Хүргүүлэх хаяг:</label>
+                <textarea id="cust-address" rows="3" placeholder="Дүүрэг, хороо, байр, орц, тоот хаягаа тодорхой бичнэ үү."></textarea>
+            </div>
+
+            <div class="bank-info">
+                <strong>💰 Төлбөр төлөх заавар:</strong><br>
+                <div class="bank-row">
+                    <span>Данс: <b>5753404499 (ХААН)</b></span>
+                    <button class="btn-copy" onclick="copyText('5753404499')">Хуулах</button>
+                </div>
+                <div class="bank-row">
+                    <span>Хүлээн авагч: <b>Ш.Соёлмаа</b></span>
+                </div>
+                <div class="bank-row">
+                    <span id="order-memo" style="color: #ff4757; font-weight: bold;">Захиалгын дугаар: ...</span>
+                    <button class="btn-copy" id="btn-copy-memo" onclick="copyMemo()">Хуулах</button>
+                </div>
+            </div>
+
+            <button class="btn-confirm" onclick="submitOrder()">Захиалга илгээх</button>
+        </div>
+    </div>
+
+    <!-- Холбоо барих болон Чатлах хөвдөг товчлуур -->
+    <div class="contact-widget">
+        <a href="tel:86060505" class="contact-btn btn-phone">
+            <span>📞 8606-0505</span>
+        </a>
+        <a href="https://m.me/Shildegonlineshop" target="_blank" class="contact-btn btn-chat">
+            <span>💬 Чатлах</span>
+        </a>
+    </div>
+
+    <script>
+        const SUPABASE_URL = "https://ybhogkvvgnltvbxhhllv.supabase.co";
+        const SUPABASE_ANON_KEY = "sb_publishable_P-29ZY11mWeS7pVvYpFR7w_QeixWL_z"; 
+
+        let allProducts = [];
+        let cart = [];
+        let total = 0;
+        let currentCategory = "Бүгд";
+        let currentOrderNum = "";
+        let currentIndices = {};
+
+        // Бараа татах
+        async function fetchProducts() {
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/products?select=*`, {
+                    headers: {
+                        "apikey": SUPABASE_ANON_KEY,
+                        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+                    }
+                });
+
+                if (!response.ok) throw new Error("Сүлжээний алдаа");
+
+                allProducts = await response.json();
+                displayProducts(allProducts);
+            } catch (error) {
+                console.error("Алдаа:", error);
+                document.getElementById('products-list').innerHTML = `<p style="color: red; text-align: center; grid-column: 1/-1;">Барааг уншиж чадсангүй.</p>`;
+            }
+        }
+
+        // Шүүлтүүр 
+        function filterCategory(categoryName) {
+            currentCategory = categoryName;
+            document.getElementById('header-title').innerText = categoryName === "Бүгд" ? "Амьдрал илүү амархан" : categoryName;
+            
+            document.querySelectorAll('.nav-links a').forEach(el => el.classList.remove('active-category'));
+            if(categoryName === 'Бүгд') document.getElementById('cat-all').classList.add('active-category');
+            else if(categoryName === 'Гэр ахуйн бараа') document.getElementById('cat-home').classList.add('active-category');
+            else if(categoryName === 'Электроник') document.getElementById('cat-elec').classList.add('active-category');
+            else if(categoryName === 'Аюулгүй байдал, Хяналт') document.getElementById('cat-security').classList.add('active-category');
+            else if(categoryName === 'Цахилгаан, Холболт') document.getElementById('cat-electric').classList.add('active-category');
+            else if(categoryName === 'Кабель, Дагалдах хэрэгсэл') document.getElementById('cat-acc').classList.add('active-category');
+            else if(categoryName === 'Ном') document.getElementById('cat-book').classList.add('active-category');
+
+            document.getElementById('search-bar').value = "";
+
+            if (categoryName === "Бүгд") {
+                displayProducts(allProducts);
+            } else {
+                const filtered = allProducts.filter(p => {
+                    if (Array.isArray(p.categories)) {
+                        return p.categories.includes(categoryName);
+                    } else if (typeof p.categories === 'string') {
+                        return p.categories === categoryName;
+                    }
+                    return false;
+                });
+                displayProducts(filtered);
+            }
+        }
+
+        // Хайлт хийх үед бүх бараанаас хайна
+        function handleSearch() {
+            const query = document.getElementById('search-bar').value.toLowerCase().trim();
+            
+            if (query !== "") {
+                currentCategory = "Бүгд";
+                document.querySelectorAll('.nav-links a').forEach(el => el.classList.remove('active-category'));
+                document.getElementById('cat-all').classList.add('active-category');
+                document.getElementById('header-title').innerText = `Хайлтын үр дүн: "${query}"`;
+            } else {
+                document.getElementById('header-title').innerText = "Амьдрал илүү амархан";
+            }
+
+            const searched = allProducts.filter(p => p.name.toLowerCase().includes(query));
+            displayProducts(searched);
+        }
+
+        // Барааг дэлгэцэнд зурах
+        function displayProducts(products) {
+            const productsContainer = document.getElementById('products-list');
+            productsContainer.innerHTML = '';
+
+            if (products.length === 0) {
+                productsContainer.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #57606f; font-size: 1.1rem; padding: 50px 0;">Уучлаарай, бараа олдсонгүй.</p>`;
+                return;
+            }
+
+            products.forEach((product, pIndex) => {
+                let images = [product.image_url];
+                if (product.image_urls) {
+                    if (Array.isArray(product.image_urls)) images = product.image_urls;
+                    else if (typeof product.image_urls === 'string') {
+                        try { images = JSON.parse(product.image_urls); } catch (e) { images = [product.image_url]; }
+                    }
+                }
+
+                currentIndices[pIndex] = 0;
+
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.onclick = () => openDetailModal(product);
+                
+                let sliderHtml = '';
+                if (images.length > 1) {
+                    let dotsHtml = images.map((_, i) => `<span id="dot-${pIndex}-${i}" class="dot" style="width: 8px; height: 8px; background: ${i === 0 ? 'white' : 'rgba(255,255,255,0.5)'}; border-radius: 50%; display: inline-block;"></span>`).join('');
+                    
+                    sliderHtml = `
+                        <button class="slider-btn prev" onclick="changeSlide(${pIndex}, -1); event.stopPropagation();" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-weight: bold; z-index: 5;">‹</button>
+                        <button class="slider-btn next" onclick="changeSlide(${pIndex}, 1); event.stopPropagation();" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-weight: bold; z-index: 5;">›</button>
+                        <div class="slideshow-dots" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; z-index: 5;">
+                            ${dotsHtml}
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="slideshow-container" style="position: relative; overflow: hidden; border-radius: 12px; height: 250px; background: #f1f2f6;">
+                        <img id="prod-img-${pIndex}" src="${images[0]}" class="product-image" style="width:100%; height:100%; object-fit:contain;">
+                        ${sliderHtml}
+                    </div>
+                    <h3 class="product-title">${product.name}</h3>
+                    <p class="product-price">${product.price.toLocaleString()} ₮</p>
+                    <button class="btn-add" onclick="event.stopPropagation(); addToCart('${product.name.replace(/'/g, "\\'")}', ${product.price})">Сагсанд хийх</button>
+                `;
+
+                card.querySelector('.slideshow-container').setAttribute('data-images', JSON.stringify(images));
+                productsContainer.appendChild(card);
+            });
+        }
+
+        // Картын зураг солих
+        function changeSlide(pIndex, direction) {
+            const imgEl = document.getElementById(`prod-img-${pIndex}`);
+            const container = imgEl.parentElement;
+            const images = JSON.parse(container.getAttribute('data-images'));
+
+            let activeIdx = currentIndices[pIndex] + direction;
+
+            if (activeIdx >= images.length) activeIdx = 0;
+            if (activeIdx < 0) activeIdx = images.length - 1;
+
+            currentIndices[pIndex] = activeIdx;
+            imgEl.src = images[activeIdx];
+
+            images.forEach((_, i) => {
+                const dot = document.getElementById(`dot-${pIndex}-${i}`);
+                if (dot) {
+                    dot.style.background = i === activeIdx ? 'white' : 'rgba(255,255,255,0.5)';
+                }
+            });
+        }
+
+        // Барааны дэлгэрэнгүй цонх нээх функц
+        function openDetailModal(product) {
+            const modal = document.getElementById('detailModal');
+            document.getElementById('modal-product-title').innerText = product.name;
+            document.getElementById('modal-product-price').innerText = `${product.price.toLocaleString()} ₮`;
+            document.getElementById('modal-product-desc').innerText = product.description || "Тайлбар одоогоор байхгүй байна.";
+            
+            const addBtn = document.getElementById('modal-add-btn');
+            addBtn.onclick = () => {
+                addToCart(product.name, product.price);
+                closeDetailModal();
+            };
+
+            let images = [product.image_url];
+            if (product.image_urls) {
+                if (Array.isArray(product.image_urls)) images = product.image_urls;
+                else if (typeof product.image_urls === 'string') {
+                    try { images = JSON.parse(product.image_urls); } catch (e) { images = [product.image_url]; }
+                }
+            }
+
+            const sliderContainer = document.getElementById('modal-slider-container');
+            sliderContainer.innerHTML = `<img id="modal-active-img" src="${images[0]}">`;
+
+            if (images.length > 1) {
+                let activeIdx = 0;
+                let sliderHtml = `
+                    <button class="slider-btn prev" id="modal-prev" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-weight: bold;">‹</button>
+                    <button class="slider-btn next" id="modal-next" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-weight: bold;">›</button>
+                `;
+                sliderContainer.innerHTML += sliderHtml;
+
+                const imgEl = document.getElementById('modal-active-img');
+                document.getElementById('modal-prev').onclick = () => {
+                    activeIdx = (activeIdx - 1 + images.length) % images.length;
+                    imgEl.src = images[activeIdx];
+                };
+                document.getElementById('modal-next').onclick = () => {
+                    activeIdx = (activeIdx + 1) % images.length;
+                    imgEl.src = images[activeIdx];
+                };
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detailModal').style.display = 'none';
+        }
+
+        // Сагсны функцүүд
+        function addToCart(name, price) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.qty += 1;
+            } else {
+                cart.push({ name: name, price: price, qty: 1 });
+            }
+            calculateTotal();
+            updateCartUI();
+        }
+
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            calculateTotal();
+            updateCartUI();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            calculateTotal();
+            updateCartUI();
+        }
+
+        function calculateTotal() {
+            total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const totalPriceContainer = document.getElementById('total-price');
+            const cartCountContainer = document.getElementById('cart-count');
+
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            cartCountContainer.innerText = totalQty;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p style="color: #7f8c8d; text-align: center; margin: 30px 0;">Сагс хоосон байна</p>';
+                totalPriceContainer.innerText = '0';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = '';
+            cart.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <div class="cart-item-info">
+                        <div style="font-weight: 500; font-size: 0.95rem;">${item.name}</div>
+                        <div style="color: #ff4757; font-size: 0.9rem; margin-top: 3px;">${(item.price * item.qty).toLocaleString()} ₮</div>
+                    </div>
+                    <div class="cart-item-controls">
+                        <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                        <span style="font-weight: bold; font-size: 0.95rem;">${item.qty}</span>
+                        <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                        <button class="btn-delete" onclick="removeFromCart(${index})">🗑️</button>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(itemElement);
+            });
+
+            totalPriceContainer.innerText = total.toLocaleString();
+        }
+
+        // Захиалга хийх
+        function openOrderModal() {
+            if (cart.length === 0) {
+                alert('Таны сагс хоосон байна!');
+                return;
+            }
+            currentOrderNum = 'ORD-' + Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('order-memo').innerText = `Гүйлгээний утга: ${currentOrderNum}`;
+            document.getElementById('orderModal').style.display = 'flex';
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            alert('Хуулагдлаа: ' + text);
+        }
+
+        function copyMemo() {
+            copyText(currentOrderNum);
+        }
+
+        async function submitOrder() {
+            const name = document.getElementById('cust-name').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
+            const address = document.getElementById('cust-address').value.trim();
+
+            if (!name || !phone || !address) {
+                alert('Мэдээллээ бүрэн оруулна уу!');
+                return;
+            }
+
+            const itemsText = cart.map(item => `${item.name} (x${item.qty}) - ${(item.price * item.qty).toLocaleString()}₮`).join(', ');
+
+            const orderData = {
+                customer_name: name,
+                phone: phone,
+                address: address,
+                items: itemsText,
+                total_price: total
+            };
+
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
+                    method: 'POST',
+                    headers: {
+                        "apikey": SUPABASE_ANON_KEY,
+                        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+                        "Content-Type": "application/json",
+                        "Prefer": "return=minimal"
+                    },
+                    body: JSON.stringify(orderData)
+                });
+
+                if (response.ok) {
+                    alert(`Баярлалаа! Захиалга амжилттай бүртгэгдлээ.\n\nШилжүүлэх дүн: ${total.toLocaleString()} ₮\nГүйлгээний утга: ${currentOrderNum}\n\nБид тантай тун удахгүй холбогдох болно.`);
+                    cart = [];
+                    total = 0;
+                    updateCartUI();
+                    closeOrderModal();
+                } else {
+                    throw new Error("Алдаа гарлаа");
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Уучлаарай, алдаа гарлаа. Дахин оролдоно уу.');
+            }
+        }
+
+        window.onclick = function(event) {
+            const detailModal = document.getElementById('detailModal');
+            const orderModal = document.getElementById('orderModal');
+            if (event.target == detailModal) {
+                detailModal.style.display = "none";
+            }
+            if (event.target == orderModal) {
+                orderModal.style.display = "none";
+            }
+        }
+
+        window.onload = fetchProducts;
+    </script>
+</body>
+</html>
