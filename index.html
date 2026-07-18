@@ -120,7 +120,7 @@
             display: block;
         }
 
-        /* 🖼️ БАННЕР CSS */
+        /* БАННЕР CSS */
         header {
             background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.3)), 
                         url('https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1600') no-repeat center center/cover;
@@ -306,14 +306,36 @@
         .drawer-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 10000; }
         .cart-title { border-bottom: 2px solid #f1f2f6; padding-bottom: 12px; margin-top: 0; display: flex; justify-content: space-between; align-items: center; }
         .cart-count { background-color: #ff4757; color: white; padding: 3px 8px; border-radius: 20px; font-size: 0.8rem; }
-        #cart-items { flex: 1; overflow-y: auto; margin-bottom: 15px; }
+        
+        /* 🆕 ХҮРГЭЛТИЙН УХААЛАГ МЭДЭЭЛЛИЙН СТИЛЬ */
+        .cart-summary-box {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            border: 1px solid #eef0f3;
+        }
+        .summary-row { display: flex; justify-content: space-between; margin: 4px 0; color: #57606f; }
+        .free-delivery-promo {
+            background-color: #e3fafc;
+            color: #0b7285;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        #cart-items { flex: 1; overflow-y: auto; margin-bottom: 5px; }
         .cart-item { display: flex; justify-content: space-between; align-items: center; margin: 12px 0; padding-bottom: 12px; border-bottom: 1px dashed #f1f2f6; }
         .cart-item-info { flex: 2; }
         .cart-item-controls { display: flex; align-items: center; gap: 8px; }
         .qty-btn { background-color: #f1f2f6; border: none; width: 22px; height: 22px; border-radius: 50%; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; }
         .btn-delete { background: none; border: none; color: #ff4757; cursor: pointer; font-size: 1rem; }
-        .cart-warning { background-color: #fffaf0; border: 1px solid #ffeaa7; border-radius: 6px; padding: 10px; font-size: 0.8rem; color: #d63031; line-height: 1.3; display: flex; gap: 6px; }
-        .cart-total { font-size: 1.25rem; font-weight: bold; margin-top: 15px; display: flex; justify-content: space-between; }
+        .cart-warning { background-color: #fffaf0; border: 1px solid #ffeaa7; border-radius: 6px; padding: 10px; font-size: 0.8rem; color: #d63031; line-height: 1.3; display: flex; gap: 6px; margin-top: 10px; }
+        .cart-total { font-size: 1.25rem; font-weight: bold; margin-top: 10px; display: flex; justify-content: space-between; border-top: 2px solid #2f3542; padding-top: 10px; }
         .btn-checkout { background-color: #1e90ff; color: white; border: none; width: 100%; padding: 12px; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
 
         /* Захиалгын Модал */
@@ -410,15 +432,25 @@
     <div id="cartDrawer" class="cart-drawer">
         <span class="close-btn" onclick="toggleCart(false)" style="top: 15px; right: 20px;">&times;</span>
         <h3 class="cart-title">Миний сагс <span id="cart-count" class="cart-count">0</span></h3>
+        
         <div id="cart-items">
             <p style="color: #7f8c8d; text-align: center; margin: 30px 0;">Сагс хоосон байна</p>
         </div>
-        <div class="cart-warning">
-            <span>⚠️</span>
-            <span>Та төлбөрөө 100% шилжүүлснээр захиалга баталгаажих бөгөөд сургалт/бараа идэвхжих болно.</span>
+
+        <!-- 🆕 ШИНЭ: ХҮРГЭЛТИЙН АВТОМАТ ТООЦООНЫ ХЭСЭГ -->
+        <div class="cart-summary-box" id="cart-summary-section" style="display: none;">
+            <div class="summary-row"><span>Барааны дэд дүн:</span><span><span id="subtotal-price">0</span> ₮</span></div>
+            <div class="summary-row"><span>Хүргэлтийн төлбөр:</span><span id="delivery-price-text">8,000 ₮</span></div>
+            <div id="delivery-promo-msg" class="free-delivery-promo"></div>
         </div>
+
+        <<div class="cart-warning">
+    <span>⚠️</span>
+    <span>Төлбөр гүйцэд шилжсэнээр захиалга баталгаажиж, хүргэлт болон сургалт идэвхжих ажиллагаа хийгдэнэ.</span>
+</div>
+        
         <div class="cart-total">
-            <span>Нийт дүн:</span>
+            <span>Нийт төлөх дүн:</span>
             <span><span id="total-price">0</span> ₮</span>
         </div>
         <button class="btn-checkout" onclick="openOrderModal()">Захиалах</button>
@@ -448,6 +480,10 @@
                 <div class="bank-row">
                     <span id="order-memo" style="color: #ff4757; font-weight: bold;">Захиалга: ...</span>
                 </div>
+                <!-- 🆕 ШИНЭ: ХҮРГЭЛТИЙН ХУГАЦААНЫ ТОДОРХОЙ САНАМЖ -->
+                <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #ccc; font-size: 0.8rem; color: #2f3542; line-height: 1.3;">
+                    🚚 **Хүргэлтийн санамж:** Бараа хүргэлт ажлын өдрүүдэд **24-48 цаг** дотор хийгдэнэ. Хэрэв онлайн сургалт захиалсан бол хүргэлтийн төлбөр тооцогдохгүй бөгөөд таны хаягаар шууд идэвхжинэ.
+                </div>
             </div>
             <button class="btn-confirm" onclick="submitOrder()">Илгээх</button>
         </div>
@@ -465,6 +501,8 @@
         let allProducts = [];
         let cart = [];
         let total = 0;
+        let subtotal = 0;
+        let deliveryFee = 8000;
         let currentCategory = "Бүгд";
         let currentOrderNum = "";
 
@@ -501,7 +539,6 @@
             }
         }
 
-        // 🔥 ШИНЭЧЛЭГДСЭН: Ижил төрлийн бараануудыг шүүхдээ ухаалаг (хэсэгчлэн тааруулах) болгож засав.
         function checkUrlHash() {
             const hash = window.location.hash;
             const singleView = document.getElementById('singleProductView');
@@ -534,16 +571,14 @@
                         document.getElementById('sphDesc').innerText = targetProduct.description || "Тайлбар байхгүй.";
                     }
 
-                    document.getElementById('sphAddBtn').onclick = () => addToCart(targetProduct.name, targetProduct.price);
+                    document.getElementById('sphAddBtn').onclick = () => addToCart(targetProduct, targetProduct.name, targetProduct.price);
                     document.getElementById('sphSliderContainer').innerHTML = `<img src="${targetProduct.image_url}">`;
 
-                    // 🛠️ ЗАСВАР: Ижил төрлийн барааг шүүхдээ үсэг зөрөхөөс сэргийлж хэсэгчлэн харьцуулна.
                     const relatedCategory = String(targetProduct.categories || "").toLowerCase();
                     const filteredRelated = allProducts.filter(p => {
                         if (!p.categories || p.id == targetProduct.id) return false;
                         const pCat = String(p.categories).toLowerCase();
                         
-                        // Жишээ нь "Аюулгүй байдал" гэдэг үг хоёуланд нь байвал ижил бараа гэж үзнэ
                         return pCat === relatedCategory || 
                                pCat.includes(relatedCategory.substring(0, 10)) || 
                                relatedCategory.includes(pCat.substring(0, 10));
@@ -645,7 +680,7 @@
                     </div>
                     <h3 class="product-title">${product.name}</h3>
                     <p class="product-price">${product.price.toLocaleString()} ₮</p>
-                    <button class="btn-add" onclick="event.stopPropagation(); addToCart('${product.name.replace(/'/g, "\\'")}', ${product.price})">
+                    <button class="btn-add" onclick="event.stopPropagation(); addToCart(null, '${product.name.replace(/'/g, "\\'")}', ${product.price})">
                         ${isLesson ? 'Сургалт авах' : 'Сагсанд хийх'}
                     </button>
                 `;
@@ -664,10 +699,19 @@
             }
         }
 
-        function addToCart(name, price) {
+        // 🆕 ШИНЭЧЛЭГДСЭН: Сагслах үед тухайн барааны ангиллыг хамт хадгалдаг болгов
+        function addToCart(productObj, name, price) {
+            let target = productObj;
+            if(!target) {
+                target = allProducts.find(p => p.name === name);
+            }
+            
+            const category = target ? target.categories : "";
             const existingItem = cart.find(item => item.name === name);
+            
             if (existingItem) { existingItem.qty += 1; } 
-            else { cart.push({ name: name, price: price, qty: 1 }); }
+            else { cart.push({ name: name, price: price, qty: 1, category: category }); }
+            
             calculateTotal(); updateCartUI(); toggleCart(true); 
         }
 
@@ -681,26 +725,58 @@
             cart.splice(index, 1); calculateTotal(); updateCartUI();
         }
 
+        // 🆕 ШИНЭЧЛЭГДСЭН: ХҮРГЭЛТИЙН УХААЛАГ СИСТЕМИЙН БОДОЛТ
         function calculateTotal() {
-            total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            
+            // Сагсанд зөвхөн хичээлүүд л байгаа эсэхийг шалгах (Биет бараа байгаа эсэх)
+            const hasPhysicalProduct = cart.some(item => {
+                const cat = String(item.category || "").toLowerCase();
+                return !cat.includes("хичээл");
+            });
+
+            if (cart.length === 0) {
+                deliveryFee = 0;
+                total = 0;
+            } else if (!hasPhysicalProduct) {
+                // Сагсан дотор зөвхөн сургалтын хичээл байвал хүргэлт 0 ₮
+                deliveryFee = 0;
+                total = subtotal;
+            } else if (subtotal >= 250000) {
+                // Худалдан авалт 250,000-аас дээш бол хүргэлт үнэгүй
+                deliveryFee = 0;
+                total = subtotal;
+            } else {
+                // Биет бараатай, бас 250к хүрээгүй бол хүргэлт 8000 ₮
+                deliveryFee = 8000;
+                total = subtotal + deliveryFee;
+            }
         }
 
+        // 🆕 ШИНЭЧЛЭГДСЭН: САГСНЫ ХАРАГДАЦЫГ ТОДОРХОЙ БОЛГОСОН НЬ
         function updateCartUI() {
             const cartItemsContainer = document.getElementById('cart-items');
+            const subtotalPriceContainer = document.getElementById('subtotal-price');
+            const deliveryPriceText = document.getElementById('delivery-price-text');
+            const deliveryPromoMsg = document.getElementById('delivery-promo-msg');
             const totalPriceContainer = document.getElementById('total-price');
             const navCartCountContainer = document.getElementById('nav-cart-count');
-            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            const summarySection = document.getElementById('cart-summary-section');
             
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
             navCartCountContainer.innerText = totalQty;
             document.getElementById('cart-count').innerText = totalQty;
 
             if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<p style="color: #7f8c8d; text-align: center; margin: 30px 0;">Сагс хоосон байна</p>';
+                cartItemsContainer.innerHTML = '<p style="color: #7f8c8d; text-align: center; margin: 30px 0;">Sample сагс хоосон байна</p>';
+                summarySection.style.display = 'none';
                 totalPriceContainer.innerText = '0';
                 return;
             }
 
+            summarySection.style.display = 'block';
             cartItemsContainer.innerHTML = '';
+            
             cart.forEach((item, index) => {
                 const itemElement = document.createElement('div');
                 itemElement.className = 'cart-item';
@@ -718,6 +794,32 @@
                 `;
                 cartItemsContainer.appendChild(itemElement);
             });
+
+            // Дэд дүн хэвлэх
+            subtotalPriceContainer.innerText = subtotal.toLocaleString();
+            
+            // Хүргэлтийн текстийг бодолтоор харуулах
+            const hasPhysicalProduct = cart.some(item => !String(item.category || "").toLowerCase().includes("хичээл"));
+            
+            if (!hasPhysicalProduct && cart.length > 0) {
+                deliveryPriceText.innerHTML = `<b style="color: #2ed573;">ҮНЭГҮЙ (Онлайн хичээл)</b>`;
+                deliveryPromoMsg.style.display = 'none';
+            } else if (subtotal >= 250000) {
+                deliveryPriceText.innerHTML = `<b style="color: #2ed573;">ҮНЭГҮЙ</b>`;
+                deliveryPromoMsg.innerHTML = `🎉 Баяр хүргэе! Та үнэгүй хүргэлтийн болзол хангалаа.`;
+                deliveryPromoMsg.style.display = 'block';
+                deliveryPromoMsg.style.backgroundColor = '#e6fffa';
+                deliveryPromoMsg.style.color = '#097969';
+            } else {
+                deliveryPriceText.innerText = `${deliveryFee.toLocaleString()} ₮`;
+                const missingAmount = 250000 - subtotal;
+                deliveryPromoMsg.innerHTML = `💡 Та дахин <b>${missingAmount.toLocaleString()} ₮</b>-ний бараа авбал <b>ХҮРГЭЛТ ҮНЭГҮЙ</b> болно.`;
+                deliveryPromoMsg.style.display = 'block';
+                deliveryPromoMsg.style.backgroundColor = '#e3fafc';
+                deliveryPromoMsg.style.color = '#0b7285';
+            }
+
+            // Нийт төлөх дүн
             totalPriceContainer.innerText = total.toLocaleString();
         }
 
@@ -739,7 +841,11 @@
             if (!name || !phone || !address) return alert('Мэдээллээ бүрэн оруулна уу!');
 
             const itemsText = cart.map(item => `${item.name} (x${item.qty})`).join(', ');
-            const orderData = { customer_name: name, phone: phone, address: address, items: itemsText, total_price: total };
+            
+            // Сургалт болон Хүргэлтийн санамж нэмсэн текст захиалга руу илгээнэ
+            const fullItemsDetails = `${itemsText} | Хүргэлт: ${deliveryFee === 0 ? 'Үнэгүй' : deliveryFee + ' ₮'}`;
+            
+            const orderData = { customer_name: name, phone: phone, address: address, items: fullItemsDetails, total_price: total };
 
             try {
                 const response = await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
@@ -752,8 +858,8 @@
                 });
 
                 if (response.ok) {
-                    alert(`Захиалга бүртгэгдлээ!\n\nШилжүүлэх дүн: ${total.toLocaleString()} ₮\nУтга: ${currentOrderNum}`);
-                    cart = []; total = 0; updateCartUI(); closeOrderModal();
+                    alert(`Захиалга амжилттай бүртгэгдлээ!\n\nНийт шилжүүлэх дүн: ${total.toLocaleString()} ₮\nУтга: ${currentOrderNum}\n\nБараа 24-48 цагийн дотор хүргэгдэнэ.`);
+                    cart = []; total = 0; subtotal = 0; updateCartUI(); closeOrderModal();
                 } else { throw new Error(); }
             } catch (e) { alert('Алдаа гарлаа. Дахин оролдоно уу.'); }
         }
