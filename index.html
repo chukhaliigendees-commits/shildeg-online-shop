@@ -120,7 +120,7 @@
             display: block;
         }
 
-        /* 🖼️ БАННЕР CSS: Арын зургуудыг хаагаад байсан гүн цэнхэр туяаг бүрэн арилгаж, маш тод гэрэлтэй болгов */
+        /* 🖼️ БАННЕР CSS */
         header {
             background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.3)), 
                         url('https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1600') no-repeat center center/cover;
@@ -425,40 +425,15 @@
         let currentOrderNum = "";
         let currentIndices = {};
 
-        // 🌟 ЭЦСИЙН ШИНЭЧЛЭЛТ: Маш сайн хянагдсан, үг үсгийн алдаагүй, өндөр нягтралтай зургуудын сан
         const categoryBanners = {
-            "Бүгд": {
-                image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1600",
-                desc: "Гэрийн тав тух, эмх цэгцийг бүрдүүлэгч ухаалаг шийдлүүд"
-            },
-            "Гэр ахуйн бараа": {
-                image: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=1600",
-                desc: "Гал тогоо болон гэрийн тавилга, ахуйн хэрэглээний шилдэг бүтээгдэхүүнүүд"
-            },
-            "Электроник": {
-                image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600",
-                desc: "Ардуино хавтан, ухаалаг чип болон электроникийн эд ангиуд"
-            },
-            "Аюулгүй байдал, Хяналт": {
-                image: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=1600",
-                desc: "Галын аюулаас сэргийлэх мэдрэгч болон мэргэжлийн хяналтын системүүд"
-            },
-            "Цахилгаан, Холболт": {
-                image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1600",
-                desc: "Найдвартай ажиллагаатай цахилгааны автомат, утас, тоног төхөөрөмж"
-            },
-            "Кабель, Дагалдах хэрэгсэл": {
-                image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1600",
-                desc: "Сүлжээний болон цахилгааны кабель утас, угсралтын туслах материалууд"
-            },
-            "Ном": {
-                image: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?q=80&w=1600",
-                desc: "Оюуны мэлмийг баясгах шилдэг борлуулалттай ном зохиолууд"
-            },
-            "Хувцас": {
-                image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1600",
-                desc: "Өдөр тутмын болон гоёлын бүх төрлийн загварлаг бэлэн хувцаснууд"
-            }
+            "Бүгд": { image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1600", desc: "Гэрийн тав тух, эмх цэгцийг бүрдүүлэгч ухаалаг шийдлүүд" },
+            "Гэр ахуйн бараа": { image: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=1600", desc: "Гал тогоо болон гэрийн тавилга, ахуйн хэрэглээний шилдэг бүтээгдэхүүнүүд" },
+            "Электроник": { image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600", desc: "Ардуино хавтан, ухаалаг чип болон электроникийн эд ангиуд" },
+            "Аюулгүй байдал, Хяналт": { image: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=1600", desc: "Галын аюулаас сэргийлэх мэдрэгч болон мэргэжлийн хяналтын системүүд" },
+            "Цахилгаан, Холболт": { image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1600", desc: "Найдвартай ажиллагаатай цахилгааны автомат, утас, тоног төхөөрөмж" },
+            "Кабель, Дагалдах хэрэгсэл": { image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1600", desc: "Сүлжээний болон цахилгааны кабель утас, угсралтын туслах материалууд" },
+            "Ном": { image: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?q=80&w=1600", desc: "Оюуны мэлмийг баясгах шилдэг борлуулалттай ном зохиолууд" },
+            "Хувцас": { image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1600", desc: "Өдөр тутмын болон гоёлын бүх төрлийн загварлаг бэлэн хувцаснууд" }
         };
 
         function toggleCart(isOpen) {
@@ -484,23 +459,35 @@
                 if (!response.ok) throw new Error("Сүлжээний алдаа");
                 allProducts = await response.json();
                 displayProducts(allProducts);
+                
+                // URL шалгаж бараа нээх
+                checkUrlHash();
             } catch (error) {
                 console.error("Алдаа:", error);
                 document.getElementById('products-list').innerHTML = `<p style="color: red; text-align: center; grid-column: 1/-1;">Барааг уншиж чадсангүй.</p>`;
             }
         }
 
+        // URL-ын ард байгаа #prod-id -аар барааг олж модал нээх
+        function checkUrlHash() {
+            const hash = window.location.hash;
+            if (hash && hash.startsWith('#prod-')) {
+                const productId = hash.replace('#prod-', '');
+                const targetProduct = allProducts.find(p => p.id == productId);
+                if (targetProduct) {
+                    openDetailModal(targetProduct);
+                }
+            }
+        }
+
         function filterCategory(categoryName) {
             currentCategory = categoryName;
-            
             const bannerElement = document.getElementById('main-banner');
             const titleElement = document.getElementById('header-title');
             const descElement = document.getElementById('header-desc');
 
             let bannerKey = categoryName;
-            if (categoryName.includes("хувцас")) {
-                bannerKey = "Хувцас";
-            }
+            if (categoryName.includes("хувцас")) bannerKey = "Хувцас";
 
             if (categoryBanners[bannerKey]) {
                 bannerElement.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.3)), url('${categoryBanners[bannerKey].image}')`;
@@ -524,11 +511,8 @@
                 displayProducts(allProducts);
             } else {
                 const filtered = allProducts.filter(p => {
-                    if (Array.isArray(p.categories)) {
-                        return p.categories.includes(categoryName);
-                    } else if (typeof p.categories === 'string') {
-                        return p.categories === categoryName;
-                    }
+                    if (Array.isArray(p.categories)) return p.categories.includes(categoryName);
+                    else if (typeof p.categories === 'string') return p.categories === categoryName;
                     return false;
                 });
                 displayProducts(filtered);
@@ -624,6 +608,9 @@
             document.getElementById('modal-product-price').innerText = `${product.price.toLocaleString()} ₮`;
             document.getElementById('modal-product-desc').innerText = product.description || "Тайлбар одоогоор байхгүй байна.";
             
+            // Линкэнд ID залгаж өгөх
+            window.location.hash = `prod-${product.id}`;
+
             const addBtn = document.getElementById('modal-add-btn');
             addBtn.onclick = () => {
                 addToCart(product.name, product.price);
@@ -662,6 +649,8 @@
 
         function closeDetailModal() {
             document.getElementById('detailModal').style.display = 'none';
+            // Хаагдах үед #id арилгах
+            history.replaceState(null, null, ' ');
         }
 
         function addToCart(name, price) {
@@ -796,10 +785,11 @@
         window.onclick = function(event) {
             const detailModal = document.getElementById('detailModal');
             const orderModal = document.getElementById('orderModal');
-            if (event.target == detailModal) detailModal.style.display = "none";
+            if (event.target == detailModal) closeDetailModal();
             if (event.target == orderModal) orderModal.style.display = "none";
         }
 
+        window.onhashchange = checkUrlHash;
         window.onload = fetchProducts;
     </script>
 </body>
