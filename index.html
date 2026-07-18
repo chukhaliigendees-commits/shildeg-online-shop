@@ -143,6 +143,7 @@
             font-size: 1.1rem;
             font-weight: 500;
             text-shadow: 0 2px 8px rgba(0,0,0,0.85);
+            line-height: 1.4;
         }
 
         .search-container {
@@ -166,6 +167,53 @@
             max-width: 1400px;
             margin: 30px auto;
             padding: 0 20px;
+        }
+
+        /* БҮТЭН БАРААНЫ ХУУДАС (ITCARE ЗАГВАР) */
+        .single-product-page {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            gap: 40px;
+        }
+        
+        .sph-left {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f8f9fa;
+            border-radius: 12px;
+            height: 400px;
+            position: relative;
+        }
+        
+        .sph-left img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .sph-right {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sph-right h2 { margin: 0 0 10px 0; font-size: 1.8rem; color: #2f3542; }
+        .sph-right .price { font-size: 2rem; color: #ff4757; font-weight: bold; margin-bottom: 20px; }
+        .sph-right .desc { font-size: 1rem; color: #57606f; line-height: 1.6; margin-bottom: 25px; white-space: pre-line; border-top: 1px solid #f1f2f6; padding-top: 20px; }
+        
+        .related-title {
+            display: none;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 40px 0 20px 0;
+            border-left: 5px solid #70a1ff;
+            padding-left: 10px;
         }
 
         .products-section {
@@ -227,6 +275,24 @@
 
         .btn-add:hover { background-color: #26af5f; }
 
+        /* СУРГАЛТЫН ХИЧЭЭЛИЙН ХАМГААЛАЛТТАЙ ВИДЕО СТИЛЬ */
+        .video-container {
+            position: relative;
+            width: 100%;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        
+        .video-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: calc(100% - 40px);
+            z-index: 10;
+            background: rgba(0,0,0,0);
+        }
+
         /* Сагсны Drawer */
         .cart-drawer {
             position: fixed;
@@ -250,17 +316,9 @@
         .cart-total { font-size: 1.25rem; font-weight: bold; margin-top: 15px; display: flex; justify-content: space-between; }
         .btn-checkout { background-color: #1e90ff; color: white; border: none; width: 100%; padding: 12px; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
 
-        /* Модалууд */
+        /* Захиалгын Модал */
         .modal { display: none; position: fixed; z-index: 10002; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
         .modal-content { background-color: white; padding: 25px; border-radius: 12px; width: 420px; max-width: 90%; position: relative; }
-        .detail-modal-content { background-color: white; padding: 25px; border-radius: 16px; width: 750px; max-width: 95%; max-height: 85vh; overflow-y: auto; position: relative; display: flex; gap: 20px; }
-        .detail-left { flex: 1; display: flex; justify-content: center; align-items: center; background-color: #f8f9fa; border-radius: 10px; height: 300px; position: relative; }
-        .detail-left img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .detail-right { flex: 1.2; display: flex; flex-direction: column; text-align: left; }
-        .detail-right h2 { margin-top: 0; color: #2f3542; font-size: 1.35rem; }
-        .detail-right .price { font-size: 1.5rem; color: #ff4757; font-weight: bold; margin: 10px 0; }
-        .detail-right .desc { font-size: 0.9rem; color: #57606f; line-height: 1.5; white-space: pre-line; border-top: 1px solid #f1f2f6; padding-top: 10px; margin-bottom: 15px; overflow-y: auto; max-height: 160px; }
-
         .close-btn { position: absolute; right: 15px; top: 10px; font-size: 1.6rem; cursor: pointer; color: #aaa; z-index: 10; }
         .close-btn:hover { color: #2f3542; }
         .form-group { margin-bottom: 12px; text-align: left; }
@@ -278,26 +336,19 @@
         .btn-chat { background-color: #0084FF; }
 
         /* Responsive */
-        @media (max-width: 1024px) { .products-section { grid-template-columns: repeat(3, 1fr); gap: 15px; } }
         @media (max-width: 768px) {
             nav { padding: 12px; flex-direction: column; gap: 12px; }
             .nav-container { width: 100%; justify-content: space-between; }
-            .nav-links { width: 100vw; overflow-x: auto; padding: 5px 15px; box-sizing: border-box; display: flex; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
-            .nav-links::-webkit-scrollbar { display: none; }
+            .nav-links { width: 100vw; overflow-x: auto; padding: 5px 15px; box-sizing: border-box; display: flex; flex-wrap: nowrap; }
             .nav-links li { flex: 0 0 auto; }
-            .nav-links a, .dropbtn { font-size: 0.85rem; padding: 6px 10px; background-color: rgba(255, 255, 255, 0.05); }
             .products-section { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .product-image { height: 130px; }
-            .product-title { font-size: 0.85rem; min-height: 36px; margin: 8px 0 4px; }
-            .product-price { font-size: 0.95rem; margin-bottom: 8px; }
-            .btn-add { padding: 8px; font-size: 0.8rem; }
-            .detail-modal-content { flex-direction: column; padding: 15px; }
-            .detail-left { height: 200px; }
+            .single-product-page { flex-direction: column; padding: 15px; }
+            .sph-left { height: 250px; }
             .cart-drawer { width: 100%; right: -100%; }
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
     <nav>
         <a href="#" class="logo" onclick="filterCategory('Бүгд')">🛍️ Амьдрал илүү амархан</a>
@@ -319,6 +370,7 @@
                 <li><a href="#" id="cat-electric" onclick="filterCategory('Цахилгаан, Холболт')">Цахилгаан, Холболт</a></li>
                 <li><a href="#" id="cat-acc" onclick="filterCategory('Кабель, Дагалдах хэрэгсэл')">Кабель, Дагалдах хэрэгсэл</a></li>
                 <li><a href="#" id="cat-book" onclick="filterCategory('Ном')">Ном</a></li>
+                <li><a href="#" id="cat-lessons" onclick="filterCategory('Хичээл')">📚 Хичээл</a></li>
             </ul>
             <button class="btn-cart-trigger" onclick="toggleCart(true)">
                 🛒 Сагс <span id="nav-cart-count" style="background: white; color: #ff4757; padding: 1px 6px; border-radius: 10px; font-size: 0.75rem;">0</span>
@@ -335,6 +387,19 @@
     </header>
 
     <div class="container">
+        <!-- ИДЭВХЖИХ БҮТЭН БАРААНЫ ХУУДАС -->
+        <div id="singleProductView" class="single-product-page">
+            <div class="sph-left" id="sphSliderContainer"></div>
+            <div class="sph-right">
+                <h2 id="sphTitle">Барааны нэр</h2>
+                <div class="price" id="sphPrice">0 ₮</div>
+                <div class="desc" id="sphDesc">Тайлбар</div>
+                <button class="btn-add" id="sphAddBtn" style="padding: 15px; font-size: 1.1rem;">Сагсанд хийх</button>
+            </div>
+        </div>
+
+        <div id="relatedTitle" class="related-title">Ангиллын бусад бүтээгдэхүүнүүд</div>
+
         <div id="products-list" class="products-section">
             <p style="text-align: center; grid-column: 1/-1; color: #7f8c8d;">Барааг ачаалж байна...</p>
         </div>
@@ -350,7 +415,7 @@
         </div>
         <div class="cart-warning">
             <span>⚠️</span>
-            <span>Та төлбөрөө 100% шилжүүлснээр захиалга баталгаажих бөгөөд бараа 24-48 цагийн дотор таны гарт хүргэгдэх болно.</span>
+            <span>Та төлбөрөө 100% шилжүүлснээр захиалга баталгаажих бөгөөд сургалт/бараа идэвхжих болно.</span>
         </div>
         <div class="cart-total">
             <span>Нийт дүн:</span>
@@ -359,26 +424,11 @@
         <button class="btn-checkout" onclick="openOrderModal()">Захиалах</button>
     </div>
 
-    <!-- Барааны дэлгэрэнгүй Модал -->
-    <div id="detailModal" class="modal">
-        <div class="detail-modal-content">
-            <span class="close-btn" onclick="closeDetailModal()">&times;</span>
-            <div class="detail-left" id="modal-slider-container"></div>
-            <div class="detail-right">
-                <h2 id="modal-product-title">Барааны нэр</h2>
-                <div class="price" id="modal-product-price">0 ₮</div>
-                <div class="desc" id="modal-product-desc">Тайлбар одоогоор байхгүй байна.</div>
-                <button class="btn-add" id="modal-add-btn" style="margin-top: auto;">Сагсанд хийх</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Захиалгын Модал -->
     <div id="orderModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeOrderModal()">&times;</span>
             <h2>Захиалга баталгаажуулах</h2>
-            <p>Доорх мэдээллийг үнэн зөв бөглөнө үү.</p>
             <div class="form-group">
                 <label>Хүлээн авагчийн нэр:</label>
                 <input type="text" id="cust-name" placeholder="Жишээ: А.Тамир">
@@ -388,24 +438,18 @@
                 <input type="text" id="cust-phone" placeholder="Жишээ: 99112233">
             </div>
             <div class="form-group">
-                <label>Хүргүүлэх хаяг:</label>
-                <textarea id="cust-address" rows="3" placeholder="Дүүрэг, хороо, байр, орц, тоот хаягаа тодорхой бичнэ үү."></textarea>
+                <label>Хүргүүлэх хаяг (Сургалт бол имэйл хаяг):</label>
+                <textarea id="cust-address" rows="2" placeholder="Хаяг эсвэл сургалт идэвхжүүлэх фэйсбүүк/имэйл хаяг"></textarea>
             </div>
             <div class="bank-info">
                 <strong>💰 Төлбөр төлөх заавар:</strong><br>
+                <div class="bank-row"><span>Данс: <b>5753404499 (ХААН)</b></span></div>
+                <div class="bank-row"><span>Хүлээн авагч: <b>Ш.Соёлмаа</b></span></div>
                 <div class="bank-row">
-                    <span>Данс: <b>5753404499 (ХААН)</b></span>
-                    <button class="btn-copy" onclick="copyText('5753404499')">Хуулах</button>
-                </div>
-                <div class="bank-row">
-                    <span>Хүлээн авагч: <b>Ш.Соёлмаа</b></span>
-                </div>
-                <div class="bank-row">
-                    <span id="order-memo" style="color: #ff4757; font-weight: bold;">Захиалгын дугаар: ...</span>
-                    <button class="btn-copy" id="btn-copy-memo" onclick="copyMemo()">Хуулах</button>
+                    <span id="order-memo" style="color: #ff4757; font-weight: bold;">Захиалга: ...</span>
                 </div>
             </div>
-            <button class="btn-confirm" onclick="submitOrder()">Захиалга илгээх</button>
+            <button class="btn-confirm" onclick="submitOrder()">Илгээх</button>
         </div>
     </div>
 
@@ -423,7 +467,6 @@
         let total = 0;
         let currentCategory = "Бүгд";
         let currentOrderNum = "";
-        let currentIndices = {};
 
         const categoryBanners = {
             "Бүгд": { image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1600", desc: "Гэрийн тав тух, эмх цэгцийг бүрдүүлэгч ухаалаг шийдлүүд" },
@@ -433,71 +476,128 @@
             "Цахилгаан, Холболт": { image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1600", desc: "Найдвартай ажиллагаатай цахилгааны автомат, утас, тоног төхөөрөмж" },
             "Кабель, Дагалдах хэрэгсэл": { image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1600", desc: "Сүлжээний болон цахилгааны кабель утас, угсралтын туслах материалууд" },
             "Ном": { image: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?q=80&w=1600", desc: "Оюуны мэлмийг баясгах шилдэг борлуулалттай ном зохиолууд" },
-            "Хувцас": { image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1600", desc: "Өдөр тутмын болон гоёлын бүх төрлийн загварлаг бэлэн хувцаснууд" }
+            "Хувцас": { image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1600", desc: "Өдөр тутмын болон гоёлын бүх төрлийн загварлаг бэлэн хувцаснууд" },
+            "Хичээл": { image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600", desc: "Хяналтын камерын тохиргоо, код тайлах | Галын дохиоллын тохиргоо | Роутер болон антены тохиргоо | Бүх төрлийн чип хувилах заавар" }
         };
 
         function toggleCart(isOpen) {
             const drawer = document.getElementById('cartDrawer');
             const overlay = document.getElementById('drawerOverlay');
-            if(isOpen) {
-                drawer.classList.add('open');
-                overlay.style.display = 'block';
-            } else {
-                drawer.classList.remove('open');
-                overlay.style.display = 'none';
-            }
+            if(isOpen) { drawer.classList.add('open'); overlay.style.display = 'block'; } 
+            else { drawer.classList.remove('open'); overlay.style.display = 'none'; }
         }
 
         async function fetchProducts() {
             try {
                 const response = await fetch(`${SUPABASE_URL}/rest/v1/products?select=*`, {
-                    headers: {
-                        "apikey": SUPABASE_ANON_KEY,
-                        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-                    }
+                    headers: { "apikey": SUPABASE_ANON_KEY, "Authorization": `Bearer ${SUPABASE_ANON_KEY}` }
                 });
                 if (!response.ok) throw new Error("Сүлжээний алдаа");
                 allProducts = await response.json();
-                displayProducts(allProducts);
-                
-                // URL шалгаж бараа нээх
                 checkUrlHash();
             } catch (error) {
-                console.error("Алдаа:", error);
+                console.error(error);
                 document.getElementById('products-list').innerHTML = `<p style="color: red; text-align: center; grid-column: 1/-1;">Барааг уншиж чадсангүй.</p>`;
             }
         }
 
-        // URL-ын ард байгаа #prod-id -аар барааг олж модал нээх
+        // 🔥 ШИНЭЧЛЭГДСЭН: Ижил төрлийн бараануудыг шүүхдээ ухаалаг (хэсэгчлэн тааруулах) болгож засав.
         function checkUrlHash() {
             const hash = window.location.hash;
+            const singleView = document.getElementById('singleProductView');
+            const relatedTitle = document.getElementById('relatedTitle');
+
             if (hash && hash.startsWith('#prod-')) {
                 const productId = hash.replace('#prod-', '');
                 const targetProduct = allProducts.find(p => p.id == productId);
+                
                 if (targetProduct) {
-                    openDetailModal(targetProduct);
+                    singleView.style.display = 'flex';
+                    relatedTitle.style.display = 'block';
+                    
+                    document.getElementById('sphTitle').innerText = targetProduct.name;
+                    document.getElementById('sphPrice').innerText = `${targetProduct.price.toLocaleString()} ₮`;
+                    
+                    const isLesson = targetProduct.categories === 'Хичээл' || (typeof targetProduct.categories === 'string' && targetProduct.categories.includes('Хичээл'));
+                    
+                    if(isLesson) {
+                        document.getElementById('sphDesc').innerHTML = `
+                            <div class="video-container">
+                                <div class="video-overlay"></div>
+                                <video width="100%" controls controlsList="nodownload" oncontextmenu="return false;">
+                                    <source src="${targetProduct.image_url}" type="video/mp4">
+                                </video>
+                            </div>
+                            <p style="margin-top:15px;"><b>Сургалтын агуулга:</b>\n${targetProduct.description || 'Тайлбар байхгүй.'}</p>
+                        `;
+                    } else {
+                        document.getElementById('sphDesc').innerText = targetProduct.description || "Тайлбар байхгүй.";
+                    }
+
+                    document.getElementById('sphAddBtn').onclick = () => addToCart(targetProduct.name, targetProduct.price);
+                    document.getElementById('sphSliderContainer').innerHTML = `<img src="${targetProduct.image_url}">`;
+
+                    // 🛠️ ЗАСВАР: Ижил төрлийн барааг шүүхдээ үсэг зөрөхөөс сэргийлж хэсэгчлэн харьцуулна.
+                    const relatedCategory = String(targetProduct.categories || "").toLowerCase();
+                    const filteredRelated = allProducts.filter(p => {
+                        if (!p.categories || p.id == targetProduct.id) return false;
+                        const pCat = String(p.categories).toLowerCase();
+                        
+                        // Жишээ нь "Аюулгүй байдал" гэдэг үг хоёуланд нь байвал ижил бараа гэж үзнэ
+                        return pCat === relatedCategory || 
+                               pCat.includes(relatedCategory.substring(0, 10)) || 
+                               relatedCategory.includes(pCat.substring(0, 10));
+                    });
+                    
+                    displayProducts(filteredRelated);
+                    updateBanner(targetProduct.categories || "Бүгд");
+                    return;
                 }
+            }
+            
+            singleView.style.display = 'none';
+            relatedTitle.style.display = 'none';
+            filterCategory(currentCategory);
+        }
+
+        function updateBanner(categoryName) {
+            const bannerElement = document.getElementById('main-banner');
+            const titleElement = document.getElementById('header-title');
+            const descElement = document.getElementById('header-desc');
+            
+            let bannerKey = "Бүгд";
+            const catStr = String(categoryName).toLowerCase();
+            
+            if (catStr.includes("хувцас")) bannerKey = "Хувцас";
+            else if (catStr.includes("аюулгүй байдал") || catStr.includes("хяналт")) bannerKey = "Аюулгүй байдал, Хяналт";
+            else if (catStr.includes("гэр ахуй")) bannerKey = "Гэр ахуйн бараа";
+            else if (catStr.includes("электроник")) bannerKey = "Электроник";
+            else if (catStr.includes("цахилгаан")) bannerKey = "Цахилгаан, Холболт";
+            else if (catStr.includes("кабель") || catStr.includes("дагалдах")) bannerKey = "Кабель, Дагалдах хэрэгсэл";
+            else if (catStr.includes("ном")) bannerKey = "Ном";
+            else if (catStr.includes("хичээл")) bannerKey = "Хичээл";
+
+            if (categoryBanners[bannerKey]) {
+                bannerElement.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.3)), url('${categoryBanners[bannerKey].image}')`;
+                titleElement.innerText = bannerKey === "Бүгд" ? "Амьдрал илүү амархан" : bannerKey;
+                descElement.innerText = categoryBanners[bannerKey].desc;
             }
         }
 
         function filterCategory(categoryName) {
             currentCategory = categoryName;
-            const bannerElement = document.getElementById('main-banner');
-            const titleElement = document.getElementById('header-title');
-            const descElement = document.getElementById('header-desc');
-
-            let bannerKey = categoryName;
-            if (categoryName.includes("хувцас")) bannerKey = "Хувцас";
-
-            if (categoryBanners[bannerKey]) {
-                bannerElement.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.3)), url('${categoryBanners[bannerKey].image}')`;
-                titleElement.innerText = categoryName === "Бүгд" ? "Амьдрал илүү амархан" : categoryName;
-                descElement.innerText = categoryBanners[bannerKey].desc;
+            document.getElementById('singleProductView').style.display = 'none';
+            document.getElementById('relatedTitle').style.display = 'none';
+            
+            if (!window.location.hash.startsWith('#prod-')) {
+                history.replaceState(null, null, ' ');
             }
+
+            updateBanner(categoryName);
 
             document.querySelectorAll('.nav-links a, .dropbtn').forEach(el => el.classList.remove('active-category'));
             if(categoryName === 'Бүгд') document.getElementById('cat-all').classList.add('active-category');
-            else if(bannerKey === 'Хувцас') document.getElementById('cat-clothes').classList.add('active-category');
+            else if(categoryName === 'Хичээл') document.getElementById('cat-lessons').classList.add('active-category');
             else if(categoryName === 'Гэр ахуйн бараа') document.getElementById('cat-home').classList.add('active-category');
             else if(categoryName === 'Электроник') document.getElementById('cat-elec').classList.add('active-category');
             else if(categoryName === 'Аюулгүй байдал, Хяналт') document.getElementById('cat-security').classList.add('active-category');
@@ -505,33 +605,19 @@
             else if(categoryName === 'Кабель, Дагалдах хэрэгсэл') document.getElementById('cat-acc').classList.add('active-category');
             else if(categoryName === 'Ном') document.getElementById('cat-book').classList.add('active-category');
 
-            document.getElementById('search-bar').value = "";
-
             if (categoryName === "Бүгд") {
                 displayProducts(allProducts);
             } else {
                 const filtered = allProducts.filter(p => {
-                    if (Array.isArray(p.categories)) return p.categories.includes(categoryName);
-                    else if (typeof p.categories === 'string') return p.categories === categoryName;
-                    return false;
+                    if (!p.categories) return false;
+                    const catStr = String(p.categories).toLowerCase();
+                    const targetStr = String(categoryName).toLowerCase();
+                    return catStr === targetStr || 
+                           catStr.includes(targetStr.substring(0, 10)) ||
+                           targetStr.includes(catStr.substring(0, 10));
                 });
                 displayProducts(filtered);
             }
-        }
-
-        function handleSearch() {
-            const query = document.getElementById('search-bar').value.toLowerCase().trim();
-            if (query !== "") {
-                currentCategory = "Бүгд";
-                document.querySelectorAll('.nav-links a, .dropbtn').forEach(el => el.classList.remove('active-category'));
-                document.getElementById('cat-all').classList.add('active-category');
-                document.getElementById('header-title').innerText = `Хайлтын үр дүн: "${query}"`;
-                document.getElementById('header-desc').innerText = "Таны хайсан барааны үр дүн доор харагдаж байна.";
-            } else {
-                filterCategory('Бүгд');
-            }
-            const searched = allProducts.filter(p => p.name.toLowerCase().includes(query));
-            displayProducts(searched);
         }
 
         function displayProducts(products) {
@@ -539,143 +625,60 @@
             productsContainer.innerHTML = '';
 
             if (products.length === 0) {
-                productsContainer.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #57606f; font-size: 1.1rem; padding: 50px 0;">Уучлаарай, бараа олдсонгүй.</p>`;
+                productsContainer.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #57606f; font-size: 1.1rem; padding: 50px 0;">Уучлаарай, бүтээгдэхүүн олдсонгүй.</p>`;
                 return;
             }
 
-            products.forEach((product, pIndex) => {
-                let images = [product.image_url];
-                if (product.image_urls) {
-                    if (Array.isArray(product.image_urls)) images = product.image_urls;
-                    else if (typeof product.image_urls === 'string') {
-                        try { images = JSON.parse(product.image_urls); } catch (e) { images = [product.image_url]; }
-                    }
-                }
-
-                currentIndices[pIndex] = 0;
+            products.forEach((product) => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
-                card.onclick = () => openDetailModal(product);
+                card.onclick = () => {
+                    window.location.hash = `prod-${product.id}`;
+                    window.scrollTo({top: 0, behavior: 'smooth'});
+                };
                 
-                let sliderHtml = '';
-                if (images.length > 1) {
-                    let dotsHtml = images.map((_, i) => `<span id="dot-${pIndex}-${i}" class="dot" style="width: 6px; height: 6px; background: ${i === 0 ? 'white' : 'rgba(255,255,255,0.5)'}; border-radius: 50%; display: inline-block;"></span>`).join('');
-                    sliderHtml = `
-                        <button class="slider-btn prev" onclick="changeSlide(${pIndex}, -1); event.stopPropagation();" style="position: absolute; left: 6px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.4); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 0.8rem; z-index: 5;">‹</button>
-                        <button class="slider-btn next" onclick="changeSlide(${pIndex}, 1); event.stopPropagation();" style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.4); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 0.8rem; z-index: 5;">›</button>
-                        <div class="slideshow-dots" style="position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); display: flex; gap: 4px; z-index: 5;">
-                            ${dotsHtml}
-                        </div>
-                    `;
-                }
-
+                const isLesson = product.categories === 'Хичээл' || (typeof product.categories === 'string' && product.categories.includes('Хичээл'));
+                
                 card.innerHTML = `
-                    <div class="slideshow-container" style="position: relative; overflow: hidden; border-radius: 8px; height: 170px; background: #f8f9fa;">
-                        <img id="prod-img-${pIndex}" src="${images[0]}" class="product-image" style="width:100%; height:100%; object-fit:contain;">
-                        ${sliderHtml}
+                    <div style="height: 170px; background: #f8f9fa; border-radius:8px; display:flex; justify-content:center; align-items:center;">
+                        <img src="${product.image_url}" class="product-image" style="max-height:100%; max-width:100%;">
                     </div>
                     <h3 class="product-title">${product.name}</h3>
                     <p class="product-price">${product.price.toLocaleString()} ₮</p>
-                    <button class="btn-add" onclick="event.stopPropagation(); addToCart('${product.name.replace(/'/g, "\\'")}', ${product.price})">Сагсанд хийх</button>
+                    <button class="btn-add" onclick="event.stopPropagation(); addToCart('${product.name.replace(/'/g, "\\'")}', ${product.price})">
+                        ${isLesson ? 'Сургалт авах' : 'Сагсанд хийх'}
+                    </button>
                 `;
-
-                card.querySelector('.slideshow-container').setAttribute('data-images', JSON.stringify(images));
                 productsContainer.appendChild(card);
             });
         }
 
-        function changeSlide(pIndex, direction) {
-            const imgEl = document.getElementById(`prod-img-${pIndex}`);
-            const container = imgEl.parentElement;
-            const images = JSON.parse(container.getAttribute('data-images'));
-            let activeIdx = currentIndices[pIndex] + direction;
-
-            if (activeIdx >= images.length) activeIdx = 0;
-            if (activeIdx < 0) activeIdx = images.length - 1;
-
-            currentIndices[pIndex] = activeIdx;
-            imgEl.src = images[activeIdx];
-
-            images.forEach((_, i) => {
-                const dot = document.getElementById(`dot-${pIndex}-${i}`);
-                if (dot) dot.style.background = i === activeIdx ? 'white' : 'rgba(255,255,255,0.5)';
-            });
-        }
-
-        function openDetailModal(product) {
-            const modal = document.getElementById('detailModal');
-            document.getElementById('modal-product-title').innerText = product.name;
-            document.getElementById('modal-product-price').innerText = `${product.price.toLocaleString()} ₮`;
-            document.getElementById('modal-product-desc').innerText = product.description || "Тайлбар одоогоор байхгүй байна.";
-            
-            // Линкэнд ID залгаж өгөх
-            window.location.hash = `prod-${product.id}`;
-
-            const addBtn = document.getElementById('modal-add-btn');
-            addBtn.onclick = () => {
-                addToCart(product.name, product.price);
-                closeDetailModal();
-            };
-
-            let images = [product.image_url];
-            if (product.image_urls) {
-                if (Array.isArray(product.image_urls)) images = product.image_urls;
-                else if (typeof product.image_urls === 'string') {
-                    try { images = JSON.parse(product.image_urls); } catch (e) { images = [product.image_url]; }
-                }
+        function handleSearch() {
+            const query = document.getElementById('search-bar').value.toLowerCase().trim();
+            if (query !== "") {
+                document.getElementById('header-title').innerText = `Хайлт: "${query}"`;
+                const searched = allProducts.filter(p => p.name.toLowerCase().includes(query));
+                displayProducts(searched);
+            } else {
+                filterCategory('Бүгд');
             }
-
-            const sliderContainer = document.getElementById('modal-slider-container');
-            sliderContainer.innerHTML = `<img id="modal-active-img" src="${images[0]}">`;
-
-            if (images.length > 1) {
-                let activeIdx = 0;
-                sliderContainer.innerHTML += `
-                    <button class="slider-btn prev" id="modal-prev" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer;">‹</button>
-                    <button class="slider-btn next" id="modal-next" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer;">›</button>
-                `;
-                const imgEl = document.getElementById('modal-active-img');
-                document.getElementById('modal-prev').onclick = () => {
-                    activeIdx = (activeIdx - 1 + images.length) % images.length;
-                    imgEl.src = images[activeIdx];
-                };
-                document.getElementById('modal-next').onclick = () => {
-                    activeIdx = (activeIdx + 1) % images.length;
-                    imgEl.src = images[activeIdx];
-                };
-            }
-            modal.style.display = 'flex';
-        }
-
-        function closeDetailModal() {
-            document.getElementById('detailModal').style.display = 'none';
-            // Хаагдах үед #id арилгах
-            history.replaceState(null, null, ' ');
         }
 
         function addToCart(name, price) {
             const existingItem = cart.find(item => item.name === name);
-            if (existingItem) {
-                existingItem.qty += 1;
-            } else {
-                cart.push({ name: name, price: price, qty: 1 });
-            }
-            calculateTotal();
-            updateCartUI();
-            toggleCart(true); 
+            if (existingItem) { existingItem.qty += 1; } 
+            else { cart.push({ name: name, price: price, qty: 1 }); }
+            calculateTotal(); updateCartUI(); toggleCart(true); 
         }
 
         function changeQty(index, delta) {
             cart[index].qty += delta;
             if (cart[index].qty <= 0) cart.splice(index, 1);
-            calculateTotal();
-            updateCartUI();
+            calculateTotal(); updateCartUI();
         }
 
         function removeFromCart(index) {
-            cart.splice(index, 1);
-            calculateTotal();
-            updateCartUI();
+            cart.splice(index, 1); calculateTotal(); updateCartUI();
         }
 
         function calculateTotal() {
@@ -685,12 +688,11 @@
         function updateCartUI() {
             const cartItemsContainer = document.getElementById('cart-items');
             const totalPriceContainer = document.getElementById('total-price');
-            const cartCountContainer = document.getElementById('cart-count');
             const navCartCountContainer = document.getElementById('nav-cart-count');
-
             const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-            cartCountContainer.innerText = totalQty;
+            
             navCartCountContainer.innerText = totalQty;
+            document.getElementById('cart-count').innerText = totalQty;
 
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = '<p style="color: #7f8c8d; text-align: center; margin: 30px 0;">Сагс хоосон байна</p>';
@@ -704,12 +706,12 @@
                 itemElement.className = 'cart-item';
                 itemElement.innerHTML = `
                     <div class="cart-item-info">
-                        <div style="font-weight: 500; font-size: 0.85rem; line-height: 1.2;">${item.name}</div>
-                        <div style="color: #ff4757; font-size: 0.85rem; margin-top: 3px;">${(item.price * item.qty).toLocaleString()} ₮</div>
+                        <div style="font-weight: 500; font-size: 0.85rem;">${item.name}</div>
+                        <div style="color: #ff4757; font-size: 0.85rem;">${(item.price * item.qty).toLocaleString()} ₮</div>
                     </div>
                     <div class="cart-item-controls">
                         <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
-                        <span style="font-weight: bold; font-size: 0.85rem;">${item.qty}</span>
+                        <span>${item.qty}</span>
                         <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
                         <button class="btn-delete" onclick="removeFromCart(${index})">🗑️</button>
                     </div>
@@ -720,73 +722,40 @@
         }
 
         function openOrderModal() {
-            if (cart.length === 0) {
-                alert('Таны сагс хоосон байна!');
-                return;
-            }
+            if (cart.length === 0) return alert('Сагс хоосон байна!');
             currentOrderNum = 'ORD-' + Math.floor(1000 + Math.random() * 9000);
             document.getElementById('order-memo').innerText = `Гүйлгээний утга: ${currentOrderNum}`;
             toggleCart(false); 
             document.getElementById('orderModal').style.display = 'flex';
         }
 
-        function closeOrderModal() {
-            document.getElementById('orderModal').style.display = 'none';
-        }
-
-        function copyText(text) {
-            navigator.clipboard.writeText(text);
-            alert('Хуулагдлаа: ' + text);
-        }
-
-        function copyMemo() {
-            copyText(currentOrderNum);
-        }
+        function closeOrderModal() { document.getElementById('orderModal').style.display = 'none'; }
 
         async function submitOrder() {
             const name = document.getElementById('cust-name').value.trim();
             const phone = document.getElementById('cust-phone').value.trim();
             const address = document.getElementById('cust-address').value.trim();
 
-            if (!name || !phone || !address) {
-                alert('Мэдээллээ бүрэн оруулна уу!');
-                return;
-            }
+            if (!name || !phone || !address) return alert('Мэдээллээ бүрэн оруулна уу!');
 
-            const itemsText = cart.map(item => `${item.name} (x${item.qty}) - ${(item.price * item.qty).toLocaleString()}₮`).join(', ');
+            const itemsText = cart.map(item => `${item.name} (x${item.qty})`).join(', ');
             const orderData = { customer_name: name, phone: phone, address: address, items: itemsText, total_price: total };
 
             try {
                 const response = await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
                     method: 'POST',
                     headers: {
-                        "apikey": SUPABASE_ANON_KEY,
-                        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-                        "Content-Type": "application/json",
-                        "Prefer": "return=minimal"
+                        "apikey": SUPABASE_ANON_KEY, "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+                        "Content-Type": "application/json", "Prefer": "return=minimal"
                     },
                     body: JSON.stringify(orderData)
                 });
 
                 if (response.ok) {
-                    alert(`Баярлалаа! Захиалга амжилттай бүртгэгдлээ.\n\nШилжүүлэх дүн: ${total.toLocaleString()} ₮\nГүйлгээний утга: ${currentOrderNum}\n\nБид тантай тун удахгүй холбогдох болно.`);
-                    cart = []; total = 0;
-                    updateCartUI();
-                    closeOrderModal();
-                } else {
-                    throw new Error("Алдаа гарлаа");
-                }
-            } catch (error) {
-                console.error(error);
-                alert('Уучлаарай, алдаа гарлаа. Дахин оролдоно уу.');
-            }
-        }
-
-        window.onclick = function(event) {
-            const detailModal = document.getElementById('detailModal');
-            const orderModal = document.getElementById('orderModal');
-            if (event.target == detailModal) closeDetailModal();
-            if (event.target == orderModal) orderModal.style.display = "none";
+                    alert(`Захиалга бүртгэгдлээ!\n\nШилжүүлэх дүн: ${total.toLocaleString()} ₮\nУтга: ${currentOrderNum}`);
+                    cart = []; total = 0; updateCartUI(); closeOrderModal();
+                } else { throw new Error(); }
+            } catch (e) { alert('Алдаа гарлаа. Дахин оролдоно уу.'); }
         }
 
         window.onhashchange = checkUrlHash;
