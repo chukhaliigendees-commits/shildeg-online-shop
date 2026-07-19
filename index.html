@@ -444,10 +444,10 @@
             <div id="delivery-promo-msg" class="free-delivery-promo"></div>
         </div>
 
-        <<div class="cart-warning">
-    <span>⚠️</span>
-    <span>Төлбөр гүйцэд шилжсэнээр захиалга баталгаажиж, хүргэлт болон сургалт идэвхжих ажиллагаа хийгдэнэ.</span>
-</div>
+        <div class="cart-warning">
+            <span>⚠️</span>
+            <span>Төлбөр гүйцэд шилжсэнээр захиалга баталгаажиж, хүргэлт болон сургалт идэвхжих ажиллагаа хийгдэнэ.</span>
+        </div>
         
         <div class="cart-total">
             <span>Нийт төлөх дүн:</span>
@@ -497,6 +497,10 @@
     <script>
         const SUPABASE_URL = "https://ybhogkvvgnltvbxhhllv.supabase.co";
         const SUPABASE_ANON_KEY = "sb_publishable_P-29ZY11mWeS7pVvYpFR7w_QeixWL_z"; 
+
+        // 🚨 ТЕЛЕГРАМ БОТ ТОХИРГОО (ШИНЭЭР НЭМЭГДЭВ)
+        const TELEGRAM_BOT_TOKEN = "8419305318:AAE7yKVStfw1VBCBi0WPK_dv6QT8iRH9q7c";
+        const TELEGRAM_CHAT_ID = "7642153678";
 
         let allProducts = [];
         let cart = [];
@@ -699,7 +703,6 @@
             }
         }
 
-        // 🆕 ШИНЭЧЛЭГДСЭН: Сагслах үед тухайн барааны ангиллыг хамт хадгалдаг болгов
         function addToCart(productObj, name, price) {
             let target = productObj;
             if(!target) {
@@ -725,11 +728,9 @@
             cart.splice(index, 1); calculateTotal(); updateCartUI();
         }
 
-        // 🆕 ШИНЭЧЛЭГДСЭН: ХҮРГЭЛТИЙН УХААЛАГ СИСТЕМИЙН БОДОЛТ
         function calculateTotal() {
             subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
             
-            // Сагсанд зөвхөн хичээлүүд л байгаа эсэхийг шалгах (Биет бараа байгаа эсэх)
             const hasPhysicalProduct = cart.some(item => {
                 const cat = String(item.category || "").toLowerCase();
                 return !cat.includes("хичээл");
@@ -739,21 +740,17 @@
                 deliveryFee = 0;
                 total = 0;
             } else if (!hasPhysicalProduct) {
-                // Сагсан дотор зөвхөн сургалтын хичээл байвал хүргэлт 0 ₮
                 deliveryFee = 0;
                 total = subtotal;
             } else if (subtotal >= 250000) {
-                // Худалдан авалт 250,000-аас дээш бол хүргэлт үнэгүй
                 deliveryFee = 0;
                 total = subtotal;
             } else {
-                // Биет бараатай, бас 250к хүрээгүй бол хүргэлт 8000 ₮
                 deliveryFee = 8000;
                 total = subtotal + deliveryFee;
             }
         }
 
-        // 🆕 ШИНЭЧЛЭГДСЭН: САГСНЫ ХАРАГДАЦЫГ ТОДОРХОЙ БОЛГОСОН НЬ
         function updateCartUI() {
             const cartItemsContainer = document.getElementById('cart-items');
             const subtotalPriceContainer = document.getElementById('subtotal-price');
@@ -768,7 +765,7 @@
             document.getElementById('cart-count').innerText = totalQty;
 
             if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<p style="color: #7f8c8d; text-align: center; margin: 30px 0;">Sample сагс хоосон байна</p>';
+                cartItemsContainer.innerHTML = '<p style="color: #7f8c8d; text-align: center; margin: 30px 0;">Сагс хоосон байна</p>';
                 summarySection.style.display = 'none';
                 totalPriceContainer.innerText = '0';
                 return;
@@ -795,10 +792,8 @@
                 cartItemsContainer.appendChild(itemElement);
             });
 
-            // Дэд дүн хэвлэх
             subtotalPriceContainer.innerText = subtotal.toLocaleString();
             
-            // Хүргэлтийн текстийг бодолтоор харуулах
             const hasPhysicalProduct = cart.some(item => !String(item.category || "").toLowerCase().includes("хичээл"));
             
             if (!hasPhysicalProduct && cart.length > 0) {
@@ -819,7 +814,6 @@
                 deliveryPromoMsg.style.color = '#0b7285';
             }
 
-            // Нийт төлөх дүн
             totalPriceContainer.innerText = total.toLocaleString();
         }
 
@@ -841,13 +835,12 @@
             if (!name || !phone || !address) return alert('Мэдээллээ бүрэн оруулна уу!');
 
             const itemsText = cart.map(item => `${item.name} (x${item.qty})`).join(', ');
-            
-            // Сургалт болон Хүргэлтийн санамж нэмсэн текст захиалга руу илгээнэ
             const fullItemsDetails = `${itemsText} | Хүргэлт: ${deliveryFee === 0 ? 'Үнэгүй' : deliveryFee + ' ₮'}`;
             
             const orderData = { customer_name: name, phone: phone, address: address, items: fullItemsDetails, total_price: total };
 
             try {
+                // 1. Supabase рүү хадгалах хэсэг
                 const response = await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
                     method: 'POST',
                     headers: {
@@ -858,6 +851,31 @@
                 });
 
                 if (response.ok) {
+                    
+                    // 2. 🚨 ТЕЛЕГРАМ РҮҮ МЭДЭГДЭЛ ИЛГЭЭХ ХЭСЭГ (ШИНЭЭР НЭМЭГДЭВ)
+                    const telegramMessage = `📦 *ШИНЭ ЗАХИАЛГА БҮРТГЭГДЛЭЭ* 📦\n\n` +
+                                            `🆔 *Код:* ${currentOrderNum}\n` +
+                                            `👤 *Нэр:* ${name}\n` +
+                                            `📞 *Утас:* ${phone}\n` +
+                                            `📍 *Хаяг:* ${address}\n\n` +
+                                            `🛒 *Бараанууд:* ${itemsText}\n` +
+                                            `🚚 *Хүргэлт:* ${deliveryFee === 0 ? 'Үнэгүй' : deliveryFee.toLocaleString() + ' ₮'}\n` +
+                                            `💰 *Нийт дүн:* ${total.toLocaleString()} ₮`;
+
+                    const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+                    
+                    // Телеграм руу арын фон дээр илгээнэ (вэбсайт гацахгүй)
+                    fetch(telegramUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_CHAT_ID,
+                            text: telegramMessage,
+                            parse_mode: 'Markdown'
+                        })
+                    }).catch(err => console.error("Телеграм руу илгээхэд алдаа гарлаа:", err));
+
+                    // Хэрэглэгчид амжилттай болсныг харуулах
                     alert(`Захиалга амжилттай бүртгэгдлээ!\n\nНийт шилжүүлэх дүн: ${total.toLocaleString()} ₮\nУтга: ${currentOrderNum}\n\nБараа 24-48 цагийн дотор хүргэгдэнэ.`);
                     cart = []; total = 0; subtotal = 0; updateCartUI(); closeOrderModal();
                 } else { throw new Error(); }
