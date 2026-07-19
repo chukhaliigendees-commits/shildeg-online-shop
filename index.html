@@ -393,7 +393,6 @@
                 <li><a href="#" id="cat-acc" onclick="filterCategory('Кабель, Дагалдах хэрэгсэл')">Кабель, Дагалдах хэрэгсэл</a></li>
                 <li><a href="#" id="cat-book" onclick="filterCategory('Ном')">Ном</a></li>
                 <li><a href="#" id="cat-lessons" onclick="filterCategory('Хичээл')">📚 Хичээл</a></li>
-                <!-- 🆕 ШИНЭ: ДЭЭД ЦЭСЭНД ҮНИЙН САНАЛ АВАХ ХӨЛДӨГЧ ХОЛБООС НЭМЭВ -->
                 <li><a href="#rfq-section" style="background-color: #2563eb; color: white; font-weight: bold; border-radius: 6px;">📋 Үнийн санал авах</a></li>
             </ul>
             <button class="btn-cart-trigger" onclick="toggleCart(true)">
@@ -428,7 +427,7 @@
             <p style="text-align: center; grid-column: 1/-1; color: #7f8c8d;">Барааг ачаалж байна...</p>
         </div>
 
-        <!-- 🆕 ШИНЭ: БАРААНЫ ДООР БАЙРЛАХ ТЕХНИКИЙН ҮНИЙН САНАЛ АВАХ ФОРМ ХЭСЭГ -->
+        <!-- ТЕХНИКИЙН ҮНИЙН САНАЛ АВАХ ФОРМ ХЭСЭГ -->
         <div id="rfq-section" style="background: white; padding: 35px; border-radius: 16px; box-shadow: 0 5px 25px rgba(0,0,0,0.05); margin-top: 60px; border-top: 5px solid #2563eb; max-width: 600px; margin-left: auto; margin-right: auto;">
             <h2 style="color: #1e3a8a; text-align: center; margin-bottom: 8px; font-size: 1.6rem;">📋 Техникийн Үнийн Санал Авах</h2>
             <p style="color: #64748b; text-align: center; margin-bottom: 25px; font-size: 0.95rem;">Камер болон галын дохиоллын системийн хүсэлтээ илгээнэ үү. Бид таны Телеграм бот руу мэдээллийг шууд илгээх болно.</p>
@@ -450,7 +449,7 @@
                 </div>
                 <div class="form-group">
                     <label>Холбоо барих утасны дугаар:</label>
-                    <input type="tel" id="rfqPhone" placeholder="Жишээ: 99xxxxxx" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; outline: none;" required>
+                    <input type="tel" id="rfqPhone" placeholder="Жишээ: 86xxxxxx" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; outline: none;" required>
                 </div>
                 <div class="form-group">
                     <label>Нэмэлт шаардлага (Заавал биш):</label>
@@ -530,8 +529,8 @@
         const SUPABASE_URL = "https://ybhogkvvgnltvbxhhllv.supabase.co";
         const SUPABASE_ANON_KEY = "sb_publishable_P-29ZY11mWeS7pVvYpFR7w_QeixWL_z"; 
 
-        // ТЕЛЕГРАМ БОТ ТОХИРГОО
-        const TELEGRAM_BOT_TOKEN = "8419305318:AAE7yKVStfw1VBCBi0WPK_dv6QT8iRH9q7c";
+        // ТЕЛЕГРАМ БОТ ТОХИРГОО (ЯГ ЗӨВ ХУВИЛБАР)
+        const TELEGRAM_BOT_TOKEN = "8419305318:AAE7yKVSTfw1VBCBi0WPK_dv6QT8iRH9q7c";
         const TELEGRAM_CHAT_ID = "7642153678";
 
         let allProducts = [];
@@ -883,7 +882,6 @@
                 });
 
                 if (response.ok) {
-                    // ТЕЛЕГРАМ РҮҮ ЗАХИАЛГЫН МЭДЭГДЭЛ ИЛГЭЭХ ХЭСЭГ
                     const telegramMessage = `📦 *ШИНЭ ЗАХИАЛГА БҮРТГЭГДЛЭЭ* 📦\n\n` +
                                             `🆔 *Код:* ${currentOrderNum}\n` +
                                             `👤 *Нэр:* ${name}\n` +
@@ -907,7 +905,7 @@
             } catch (e) { alert('Алдаа гарлаа. Дахин оролдоно уу.'); }
         }
 
-        // 🆕 ШИНЭ: ҮНИЙН САНАЛЫН ХҮСЭЛТ (RFQ) ТЕЛЕГРАМ РҮҮ ИЛГЭЭХ ЛОГИК
+        // ҮНИЙН САНАЛЫН ХҮСЭЛТ (RFQ) ТЕЛЕГРАМ РҮҮ ИЛГЭЭХ ЛОГИК
         document.getElementById('rfqForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
