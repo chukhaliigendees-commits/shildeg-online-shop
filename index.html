@@ -68,16 +68,27 @@
             white-space: nowrap;
         }
 
-        .nav-links a:hover, .dropbtn:hover, .active-category {
-            background-color: #70a1ff;
+        .nav-links a:hover, .dropbtn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
             color: white;
         }
+        
+        /* 💎 ИДЭВХТЭЙ АНГИЛАЛ (ШИЛЭН ЦЭНХЭР) */
+        .active-category {
+            background-color: rgba(30, 144, 255, 0.25) !important;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            color: #70a1ff !important;
+            border: 1px solid rgba(30, 144, 255, 0.4);
+        }
 
-        /* Сагсны товчлуур */
+        /* 💎 САГСНЫ ТОВЧЛУУР (ЗӨВЛӨН ШҮРЭН УЛААН ШИЛЭН) */
         .btn-cart-trigger {
-            background-color: #ff4757;
-            color: white;
-            border: none;
+            background-color: rgba(255, 71, 87, 0.15);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 71, 87, 0.3);
             padding: 8px 15px;
             border-radius: 20px;
             font-weight: bold;
@@ -86,11 +97,13 @@
             align-items: center;
             gap: 8px;
             font-size: 0.9rem;
-            transition: transform 0.2s;
+            transition: all 0.2s ease;
         }
         
         .btn-cart-trigger:hover {
             transform: scale(1.05);
+            background-color: rgba(255, 71, 87, 0.3);
+            color: white;
         }
 
         /* Унадаг цэс */
@@ -226,7 +239,7 @@
             background: white;
             border-radius: 12px;
             padding: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
             text-align: center;
             border: 1px solid #eef0f3;
             transition: transform 0.2s, box-shadow 0.2s;
@@ -238,7 +251,7 @@
 
         .product-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
         }
 
         .product-image {
@@ -267,13 +280,27 @@
             margin: 0 0 12px 0; 
         }
         
+        /* 💎 НОМИН НОГООН ШИЛЭН "САГСАНД ХИЙХ" ТОВЧЛУУР */
         .btn-add {
-            background-color: #2ed573; color: white; border: none; padding: 10px 12px;
-            border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; font-size: 0.9rem;
-            transition: background 0.2s;
+            background: rgba(16, 185, 129, 0.12);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            color: #059669;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            padding: 10px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
         }
 
-        .btn-add:hover { background-color: #26af5f; }
+        .btn-add:hover {
+            background: rgba(16, 185, 129, 0.85);
+            color: white;
+            border-color: transparent;
+        }
 
         /* СУРГАЛТЫН ХИЧЭЭЛИЙН ХАМГААЛАЛТТАЙ ВИДЕО СТИЛЬ */
         .video-container {
@@ -350,12 +377,14 @@
         .bank-info { background-color: #f1f2f6; padding: 12px; border-radius: 6px; margin-top: 10px; border-left: 4px solid #1e90ff; font-size: 0.9rem; }
         .bank-row { display: flex; justify-content: space-between; align-items: center; margin: 4px 0; }
         .btn-copy { background: #1e90ff; color: white; border: none; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
-        .btn-confirm { background-color: #2ed573; color: white; border: none; width: 100%; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 12px; }
+        .btn-confirm { background-color: rgba(16, 185, 129, 0.85); color: white; border: none; width: 100%; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 12px; }
 
+        /* 💎 БАРУУН ДООД ТАЛЫН ХӨВДӨГ ТОВЧНУУД (ЗӨВЛӨРҮҮЛСЭН) */
         .contact-widget { position: fixed; bottom: 20px; right: 20px; z-index: 99; display: flex; flex-direction: column; gap: 10px; }
-        .contact-btn { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 30px; color: white; text-decoration: none; font-weight: bold; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        .btn-phone { background-color: #ff4757; }
-        .btn-chat { background-color: #0084FF; }
+        .contact-btn { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 30px; color: white; text-decoration: none; font-weight: bold; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.2s; }
+        .contact-btn:hover { transform: translateY(-2px); }
+        .btn-phone { background-color: rgba(255, 71, 87, 0.9); }
+        .btn-chat { background-color: rgba(0, 132, 255, 0.9); }
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -393,7 +422,8 @@
                 <li><a href="#" id="cat-acc" onclick="filterCategory('Кабель, Дагалдах хэрэгсэл')">Кабель, Дагалдах хэрэгсэл</a></li>
                 <li><a href="#" id="cat-book" onclick="filterCategory('Ном')">Ном</a></li>
                 <li><a href="#" id="cat-lessons" onclick="filterCategory('Хичээл')">📚 Хичээл</a></li>
-                <li><a href="#rfq-section" style="background-color: #2563eb; color: white; font-weight: bold; border-radius: 6px;">📋 Үнийн санал авах</a></li>
+                <!-- 💎 ШИЛЭН ХӨХ "ҮНИЙН САНАЛ АВАХ" ТОВЧЛУУР -->
+                <li><a href="#rfq-section" style="background-color: rgba(37, 99, 235, 0.2); color: #70a1ff; font-weight: bold; border-radius: 6px; border: 1px solid rgba(37, 99, 235, 0.4);">📋 Үнийн санал авах</a></li>
             </ul>
             <button class="btn-cart-trigger" onclick="toggleCart(true)">
                 🛒 Сагс <span id="nav-cart-count" style="background: white; color: #ff4757; padding: 1px 6px; border-radius: 10px; font-size: 0.75rem;">0</span>
@@ -444,7 +474,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Объектын төрөл ба хэмжээ:</label>
+                    <label>Объектын төрөл ba хэмжээ:</label>
                     <input type="text" id="rfqObject" placeholder="Жишээ: 3 өрөө байр, 85квм эсвэл 2 давхар дэлгүүр" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; outline: none;" required>
                 </div>
                 <div class="form-group">
